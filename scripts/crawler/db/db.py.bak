@@ -1,0 +1,28 @@
+import pymysql
+
+#database statements(build db/table):
+#create database crawler character set UTF8 collate utf8_bin;
+#create table hotnews(ID int not null AUTO_INCREMENT PRIMARY KEY, title varchar(255),link varchar(255),  
+#source varchar(16), creation_time  DATETIME DEFAULT   CURRENT_TIMESTAMP);
+
+print("test")
+
+mydb = pymysql.connect(
+  host="localhost",
+  user="test",
+  password="123456",
+  database="crawler",
+  charset='utf8'
+)
+def insert_multiple_news(items):
+    try:
+        mycursor = mydb.cursor()
+        print(items)
+        sql = "INSERT INTO hotnews (title, link, source) VALUES (%s, %s, %s)" 
+        mycursor.executemany(items)
+        mydb.commit()
+    except:
+        mydb.rollback()
+
+    mycursor.close()
+    mydb.close()
