@@ -16,7 +16,7 @@ import (
 
 func Db_query_rst(condition string) []map[string]string {
 	// Open database connection
-	db, err := sql.Open("mysql", "test:123456@/crawler")
+	db, err := sql.Open("mysql", "test:123456@localhost/crawler")
 	if err != nil {
 		panic(err.Error()) // Just for example purpose. You should use proper error handling instead of panic
 	}
