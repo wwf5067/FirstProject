@@ -15,7 +15,7 @@
     @click="open2">
     不会自动关闭
     </el-button> -->
-  <el-breadcrumb separator="/">
+  <!-- <el-breadcrumb separator="/">
     <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
     <el-breadcrumb-item><a href="/">每日焦点</a></el-breadcrumb-item>
     <el-breadcrumb-item>一周环顾</el-breadcrumb-item>
@@ -26,19 +26,24 @@
     :data="xdata"
     border
     style="width: 100%">
-    <el-table-column label="热点">
+    <el-table-column label="热点" width="150" prop="title">
       <template slot-scope="scope">
          <el-link v-if="scope.row.link != ''" v-type="primary" target="_blank" :href="scope.row.link">{{scope.row.title}}</el-link>
         <span v-else >{{scope.row.title}}</span>
       </template>
     </el-table-column>
-    <el-table-column label="相关">
+    <el-table-column label="相关" prop="title">
+       <el-table-column
+      prop="update_time"
+      label="日期"
+      width="100">
+    </el-table-column>
+      <el-table-column>
       <template slot-scope="scope">
         <el-link v-if="scope.row.s_link != ''" v-type="primary" target="_blank" :href="scope.row.s_link">{{scope.row.s_title}}</el-link>
-        <!-- <span v-else >{{scope.row.s_title}}</span> -->
       </template>
-    </el-table-column>
-    <el-table-column
+      </el-table-column>
+      <el-table-column
     label="热度" width="150">
         <template slot-scope="scope">
           <el-rate
@@ -54,14 +59,8 @@
       label="来源"
       width="60">
     </el-table-column>
-     <el-table-column
-      fixed="right"
-      prop="update_time"
-      label="日期"
-      width="100"
-     >
-    </el-table-column>
-    </el-table>
+         </el-table-column>
+    </el-table> -->
 
     <!-- <ul> -->
           <!-- <h3 v-for="item in xdata" :key="item.id">{{item.title}}</h3> -->
@@ -74,6 +73,59 @@
         <!-- <div style="color: red">{{item}}</div> -->
       <!-- </li>
     </ul> -->
+        <el-table
+      :data="totalData"
+    style="width: 100%">
+    <el-table-column type="expand">
+      <template slot-scope="props">
+        <el-form label-position="left" inline class="demo-table-expand">
+          <el-form-item v-if="props.row.s_title != ''" label="相关">
+            <el-link v-if="props.row.s_link != ''" v-type="primary" target="_blank" :href="props.row.s_link">
+            {{props.row.s_title}}
+            </el-link>
+            <span v-else>{{ props.row.s_title }}</span>
+          </el-form-item>
+          <el-form-item label="日期">
+            <span>{{ props.row.update_time }}</span>
+          </el-form-item>
+          <el-form-item label="来源">
+            <span>{{ props.row.source }}</span>
+          </el-form-item>
+        </el-form>
+      </template>
+    </el-table-column>
+    <el-table-column
+      label="热点"
+      prop="title">
+       <template slot-scope="scope">
+         <el-link v-if="scope.row.link != ''" v-type="primary" target="_blank" :href="scope.row.link">
+           {{scope.row.title}}
+         </el-link>
+        <el-link v-else-if="scope.row.s_link != ''" v-type="primary" target="_blank" :href="scope.row.s_link">
+           {{scope.row.title}}
+         </el-link>
+        <span v-else >{{scope.row.title}}</span>
+      </template>
+    </el-table-column>
+    <el-table-column
+      label="热度"
+      fixed="right"
+      width="150"
+      prop="hot">
+      <template slot-scope="scope">
+          <el-rate
+          v-model="scope.row.hot"
+          :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
+          disabled
+          score-template="{value}">
+          </el-rate>
+      </template>
+    </el-table-column>
+    <!-- <el-table-column
+      label="时间"
+      prop="date">
+    </el-table-column> -->
+    </el-table>
   <div class="pagination">
     <el-pagination
       background
@@ -207,5 +259,17 @@ h3
     align-items: center;
     justify-content: center;
   }
- </style>
 
+  .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
+ </style>
