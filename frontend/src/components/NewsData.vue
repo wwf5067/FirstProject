@@ -26,11 +26,6 @@
     :data="xdata"
     border
     style="width: 100%">
-     <el-table-column
-      prop="update_time"
-      label="日期"
-      width="160">
-    </el-table-column>
     <el-table-column label="热点">
       <template slot-scope="scope">
          <el-link v-if="scope.row.link != ''" v-type="primary" target="_blank" :href="scope.row.link">{{scope.row.title}}</el-link>
@@ -44,8 +39,7 @@
       </template>
     </el-table-column>
     <el-table-column
-    label="热度"
-    width="150">
+    label="热度" width="150">
         <template slot-scope="scope">
           <el-rate
           v-model="scope.row.hot"
@@ -56,10 +50,16 @@
         </template>
     </el-table-column>
     <el-table-column
-      fixed="right"
-      width="100"
       prop="source"
-      label="来源">
+      label="来源"
+      width="60">
+    </el-table-column>
+     <el-table-column
+      fixed="right"
+      prop="update_time"
+      label="日期"
+      width="100"
+     >
     </el-table-column>
     </el-table>
 
@@ -103,10 +103,10 @@ export default {
       // ydata: null
       tablePage: {
         pageNum: 1, // 第几页
-        pageSize: 10, // 每页多少条
+        pageSize: 30, // 每页多少条
         total: 0 // 总记录数
       },
-      pageSizes: [10, 20, 30],
+      pageSizes: [30, 40, 50],
       xdata: null,
       totalData: null
     }
@@ -208,3 +208,4 @@ h3
     justify-content: center;
   }
  </style>
+
